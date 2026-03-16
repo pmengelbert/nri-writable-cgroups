@@ -11,10 +11,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-const (
-	annotationKey = "engelbert.dev/writable-cgroups"
-	pluginName    = "writable-cgroups"
-)
+const annotationKey = "engelbert.dev/writable-cgroups"
 
 var log = logrus.StandardLogger()
 
@@ -73,37 +70,42 @@ func wantsWritableCgroups(pod *api.PodSandbox, ctr *api.Container) bool {
 }
 
 // replaceOption returns a copy of opts with every occurrence of old replaced by
-// new. If old is not present, new is appended to ensure it is set.
-func replaceOption(opts []string, old, new string) []string {
+// nu. If old is not present, new is appended to ensure it is set.
+func replaceOption(opts []string, old, nu string) []string {
 	out := make([]string, 0, len(opts))
 	found := false
 	for _, o := range opts {
 		if o == old {
-			out = append(out, new)
+			out = append(out, nu)
 			found = true
 		} else {
 			out = append(out, o)
 		}
 	}
 	if !found {
-		out = append(out, new)
+		out = append(out, nu)
 	}
 	return out
 }
 
 func main() {
 	var (
+		pluginName string
 		pluginIdx  string
 		socketPath string
 	)
 
-	flag.StringVar(&pluginIdx, "idx", "10", "plugin index")
+	flag.StringVar(&pluginName, "name", "", "plugin name to register as")
+	flag.StringVar(&pluginIdx, "idx", "", "plugin index (two-digit, e.g. \"10\")")
 	flag.StringVar(&socketPath, "socket-path", "", "NRI socket path to connect to")
 	flag.Parse()
 
-	opts := []stub.Option{
-		stub.WithPluginName(pluginName),
-		stub.WithPluginIdx(pluginIdx),
+	var opts []stub.Option
+	if pluginName != "" {
+		opts = append(opts, stub.WithPluginName(pluginName))
+	}
+	if pluginIdx != "" {
+		opts = append(opts, stub.WithPluginIdx(pluginIdx))
 	}
 	if socketPath != "" {
 		opts = append(opts, stub.WithSocketPath(socketPath))
