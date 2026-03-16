@@ -1,0 +1,20 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: writable-debug
+  namespace: default
+  annotations:
+    engelbert.dev/writable-cgroups: "true"
+spec:
+  volumes:
+  containers:
+    - name: foo
+      image: alpine
+      command: ["sleep", "345600"]
+      resources:
+        limits:
+          memory: "1000M"
+          cpu: "0.5"
+        requests:
+          memory: "1000M"
+          cpu: "0.5"

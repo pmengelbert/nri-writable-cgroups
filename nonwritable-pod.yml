@@ -1,0 +1,18 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nonwritable-debug
+  namespace: default
+spec:
+  volumes:
+  containers:
+    - name: foo
+      image: alpine
+      command: ["sleep", "345600"]
+      resources:
+        limits:
+          memory: "1000M"
+          cpu: "0.5"
+        requests:
+          memory: "1000M"
+          cpu: "0.5"
