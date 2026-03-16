@@ -1,0 +1,12 @@
+{
+  "metadata": {
+    "name": "test-container"
+  },
+  "image": {
+    "image": "docker.io/library/alpine:latest"
+  },
+  "command": ["sleep", "infinity"],
+  "annotations": {
+    "engelbert.dev/writable-cgroups": "true"
+  }
+}

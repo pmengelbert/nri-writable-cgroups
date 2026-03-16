@@ -1,0 +1,11 @@
+{
+  "metadata": {
+    "name": "test-pod",
+    "namespace": "default",
+    "uid": "test-pod-uid"
+  },
+  "annotations": {
+    "engelbert.dev/writable-cgroups": "true"
+  },
+  "log_directory": "/tmp/test-pod"
+}

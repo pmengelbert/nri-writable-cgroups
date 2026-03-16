@@ -1,0 +1,10 @@
+{
+  "metadata": {
+    "name": "test-pod-nonwritable",
+    "namespace": "default",
+    "uid": "test-pod-uid"
+  },
+  "annotations": {
+  },
+  "log_directory": "/tmp/test-pod"
+}
