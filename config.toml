@@ -1,0 +1,51 @@
+#   Copyright 2018-2022 Docker Inc.
+
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+
+#       http://www.apache.org/licenses/LICENSE-2.0
+
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
+disabled_plugins = []
+
+#root = "/var/lib/containerd"
+#state = "/run/containerd"
+#subreaper = true
+#oom_score = 0
+
+[grpc]
+  address = "/run/containerd/containerd.sock"
+  uid = 0
+  gid = 1001
+
+[debug]
+  address = "/run/containerd/debug.sock"
+  uid = 0
+  gid = 1001
+  level = "info"
+
+[plugins]
+  [plugins.'io.containerd.cri.v1.runtime'.containerd.runtimes.runc]
+    cgroup_writable = false
+
+[plugins.'io.containerd.nri.v1.nri']
+# enable nri support in containerd.
+    disable = false
+# allow connections from externally launched nri plugins.
+    disable_connections = false
+# plugin_config_path is the directory to search for plugin-specific configuration.
+    plugin_config_path = "/etc/nri/conf.d"
+# plugin_path is the directory to search for plugins to launch on startup.
+    plugin_path = "/opt/nri/plugins"
+# plugin_registration_timeout is the timeout for a plugin to register after connection.
+    plugin_registration_timeout = "5s"
+# plugin_request_timeout is the timeout for a plugin to handle an event/request.
+    plugin_request_timeout = "2s"
+# socket_path is the path of the nri socket to create for plugins to connect to.
+    socket_path = "/var/run/nri/nri.sock"
