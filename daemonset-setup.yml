@@ -19,7 +19,7 @@ spec:
             path: "/"
       initContainers:
         - name: init
-          image: pmepme.azurecr.io/setup-cgroup:2
+          image: pmepme.azurecr.io/setup-cgroup:3
           volumeMounts:
             - name: host
               mountPath: "/rootpath"

@@ -1,7 +1,7 @@
 kind: Pod
 apiVersion: v1
 metadata:
-  name: writable-debug
+  name: writable
   namespace: default
   annotations:
     engelbert.dev/writable-cgroups: "true"

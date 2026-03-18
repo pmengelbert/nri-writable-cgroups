@@ -2,6 +2,9 @@
 set -exu
 
 mkdir -p /rootpath/opt/nri/plugins
-cp /10-writable-cgroups /rootpath/opt/nri/plugins
-cp /setup-cgroup.sh /rootpath/setup-cgroup.sh
+if pgrep writable; then
+    pkill writable
+fi
+cp -f /10-writable-cgroups /rootpath/opt/nri/plugins
+cp -f /setup-cgroup.sh /rootpath/setup-cgroup.sh
 chroot /rootpath /setup-cgroup.sh
