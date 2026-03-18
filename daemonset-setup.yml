@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: setup-cgroup
+spec:
+  selector:
+    matchLabels:
+      engelbert.dev/app: setup-cgroup
+  template:
+    metadata:
+      generateName: setup-cgroup
+      labels:
+        engelbert.dev/app: setup-cgroup
+    spec:
+      hostPID: true
+      volumes:
+        - name: host
+          hostPath:
+            path: "/"
+      initContainers:
+        - name: init
+          image: pmepme.azurecr.io/setup-cgroup:2
+          volumeMounts:
+            - name: host
+              mountPath: "/rootpath"
+          securityContext:
+            privileged: true
+      containers:
+        - name: pause
+          image: registry.k8s.io/pause

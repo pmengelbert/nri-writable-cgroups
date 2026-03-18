@@ -1,7 +1,7 @@
 kind: Pod
 apiVersion: v1
 metadata:
-  name: nonwritable-debug
+  name: nonwritable
   namespace: default
 spec:
   volumes:

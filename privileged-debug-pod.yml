@@ -1,0 +1,20 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: debug-cgroup
+  namespace: default
+spec:
+  hostPID: true
+  volumes:
+    - name: host
+      hostPath:
+        path: "/"
+  containers:
+    - name: foo
+      image: ubuntu
+      command: ["sleep", "86400"]
+      volumeMounts:
+        - name: host
+          mountPath: "/rootpath"
+      securityContext:
+        privileged: true
