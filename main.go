@@ -11,9 +11,12 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-const annotationKey = "engelbert.dev/writable-cgroups"
+const defaultAnnotationKey = "writable-cgroups.nri.io/enable"
 
-var log = logrus.StandardLogger()
+var (
+	log           = logrus.StandardLogger()
+	annotationKey string
+)
 
 type plugin struct {
 	stub stub.Stub
@@ -98,6 +101,8 @@ func main() {
 	flag.StringVar(&pluginName, "name", "", "plugin name to register as")
 	flag.StringVar(&pluginIdx, "idx", "", "plugin index (two-digit, e.g. \"10\")")
 	flag.StringVar(&socketPath, "socket-path", "", "NRI socket path to connect to")
+	flag.StringVar(&annotationKey, "annotation-key", defaultAnnotationKey,
+		"pod/container annotation key that opts into writable cgroups")
 	flag.Parse()
 
 	var opts []stub.Option

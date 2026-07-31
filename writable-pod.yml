@@ -4,7 +4,7 @@ metadata:
   name: writable
   namespace: default
   annotations:
-    engelbert.dev/writable-cgroups: "true"
+    writable-cgroups.nri.io/enable: "true"
 spec:
   volumes:
   containers:
